@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tiger-exchange"
+version = "0.1.0"
+description = ""
+authors = ["abodell <andybodell9@gmail.com>"]
+readme = "README.md"
+packages = [{include = "tiger_exchange"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+PyMySQL = "^1.0.2"
+python-decouple = "^3.7"
+django = "^4.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
