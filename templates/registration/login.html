@@ -1,0 +1,58 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <!-- {% if form.errors %}
+        <p>Your username or password was incorrect. Try again</p>
+    {% endif %}
+
+    {% if next%}
+        {% if user.is_authenticated %}
+            <p>You don't have permission for this page</p>
+        {% else %}
+            <p>Please login to see this page</p>
+        {% endif %}
+    {% endif %} -->
+    <div class="main">
+        <h1 class="sign-in-header">Sign in to TigerExchange</h1>
+
+        {% if form.errors %}
+            <p class="bad-input">Incorrect username or password.</p>
+        {% endif %}
+
+        {% if next%}
+            {% if user.is_authenticated %}
+                <p class="bad-input">You don't have permission for this page.</p>
+            {% else %}
+                <p class="bad-input">Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+
+        <div class="login-container">
+            <form method='post' action="{% url 'login' %}">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input class="form-control" type="text" id="username" name="username">
+                <div class="password-container">
+                    <label for="password">Password</label>
+                    <input class="form-control" type="password" id="password" name="password">
+                    <a class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <input class="submit-btn" type="submit" value='Sign in'> 
+                <input type="hidden" name='next' value="{{ next }}">
+            </form>
+        </div>
+        <p class="new">New to TigerExchange? <a>Create an account</a>.</p>
+    </div>
+
+
+</body>
+</html>
