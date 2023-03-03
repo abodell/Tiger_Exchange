@@ -14,6 +14,11 @@ body {
     justify-content: center;
 }
 
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
 header {
     width: 100vw;
     display: flex;
@@ -36,6 +41,13 @@ header {
     display: flex;
     justify-content: center;
     margin: .5rem;
+}
+
+select {
+    z-index: 1;
+    margin-right: -2rem;
+    background: #4B4B4B;
+    border-radius: 36px;
 }
 
 .search {

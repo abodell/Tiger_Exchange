@@ -19,10 +19,13 @@
             <h3>Tiger Exchange</h3>
         </div>
         <div class = "searchbar">
+            <select class = "categories">{% block category %}
+            {% endblock %}
+            </select>
             <input type = "search" class = "search" placeholder = "Search for anything">
         </div>
         <div class = "cart-account">
-            
+
         </div>
     </header>
     {% block content %}
