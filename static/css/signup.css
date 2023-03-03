@@ -18,7 +18,7 @@ body {
     margin-top: 25px;
 }
 
-.sign-in-header{
+.signup-header{
     display: block;
     font-size: 24px;
     letter-spacing: -0.5px;
@@ -29,18 +29,18 @@ body {
     margin-top: 0;
 }
 
-.login-container {
+.signup-container {
     padding: 16px;
     font-size: 14px;
     width: 308px;
-    height: 220px;
+    height: 380px;
     color: #C9D1D9;
     background-color: #161B22;
     border: 1px solid #21262d;
     border-radius: 6px;
 }
 
-.login-container .form-control {
+.signup-container .form-control {
     display: block;
     width: 100%;
     margin: 4px 0px 16px;
@@ -56,7 +56,7 @@ body {
     transition-property: color,background-color,box-shadow,border-color;
 }
 
-.login-container .form-control:focus {
+.signup-container .form-control:focus {
     outline: none;
     border-color: #58a6ff;
     box-shadow: inset 0 0 0 1px #58a6ff;
@@ -84,7 +84,7 @@ body {
     appearance: none;
 }
 
-.login-container label {
+.signup-container label {
     display: block;
     color: #C9D1D9;
     margin-bottom: 8px;
@@ -94,7 +94,7 @@ body {
 }
 
 
-.main .new {
+.main .tologin {
     padding: 16px 16px;
     text-align: center;
     border: 1px solid #30363d;
@@ -111,7 +111,7 @@ body {
     color: #c9d1d9;
 }
 
-.main .new a {
+.main .tologin a {
     cursor: pointer;
     text-align: center;
     word-wrap: break-word;
@@ -121,29 +121,7 @@ body {
     background-color: transparent;
 }
 
-.main .new a:hover {
-    text-decoration: underline;
-}
-
-.password-container {
-    position: relative;
-}
-
-.forgot-password {
-    float: right;
-    font-size: 12px;
-    right: 0 !important;
-    top: 0 !important;
-    position: absolute !important;
-    color: #58a6ff;
-    text-decoration: none;
-    background-color: transparent;
-    word-wrap: break-word;
-    cursor: pointer;
-}
-
-.forgot-password:hover,
-.forgot-password:focus{
+.main .tologin a:hover {
     text-decoration: underline;
 }
 
@@ -157,18 +135,7 @@ body {
     color: #c9d1d9;
     text-align: center;
     margin-bottom: 16px;
-}
-
-.success-flash {
-    padding: 16px 16px;
-    margin-bottom: 8px;
-    font-size: 14px;
-    border: 1px solid rgba(35,134,54,0.4);
-    border-radius: 6px;
-    background-image: linear-gradient(rgba(35,134,54,0.15), rgba(35,134,54,0.15));
-    color: #c9d1d9;
-    text-align: center;
-    margin-bottom: 16px;
+    width: 308px;
 }
 
 input:-webkit-autofill,
