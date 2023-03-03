@@ -1,0 +1,186 @@
+html {
+    box-sizing: border-box;
+  }
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Roboto', sans-serif !important;
+    background-color: #0d1117;
+    line-height: 1.5;
+    color: #c9d1d9;
+    display: grid;
+    justify-content: center;
+}
+
+.main {
+    margin-top: 25px;
+}
+
+.sign-in-header{
+    display: block;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    text-shadow: none;
+    color: #c9d1d9;
+    font-weight: 300;
+    margin-top: 0;
+}
+
+.login-container {
+    padding: 16px;
+    font-size: 14px;
+    width: 308px;
+    height: 220px;
+    color: #C9D1D9;
+    background-color: #161B22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+}
+
+.login-container .form-control {
+    display: block;
+    width: 100%;
+    margin: 4px 0px 16px;
+    padding: 5px 12px;
+    background-color: #0D1117;
+    font-size: 14px;
+    line-height: 20px;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #c9d1d9;
+    box-shadow: 0 0 transparent;
+    transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+    transition-property: color,background-color,box-shadow,border-color;
+}
+
+.login-container .form-control:focus {
+    outline: none;
+    border-color: #58a6ff;
+    box-shadow: inset 0 0 0 1px #58a6ff;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    background-color: #238636;
+    box-shadow: 0 0 transparent, 0 0 transparent;
+    transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+    transition-property: color,background-color,box-shadow,border-color;
+    position: relative;
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid rgba(240,246,252,0.1);
+    border-radius: 6px;
+    appearance: none;
+}
+
+.login-container label {
+    display: block;
+    color: #C9D1D9;
+    margin-bottom: 8px;
+    text-align: left;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+
+.main .new {
+    padding: 16px 16px;
+    text-align: center;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    margin-top: 16px !important;
+    margin-bottom: 10px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    word-wrap: break-word;
+    font-size: 14px;
+    color: #c9d1d9;
+}
+
+.main .new a {
+    cursor: pointer;
+    text-align: center;
+    word-wrap: break-word;
+    line-height: 1.5;
+    color: #58a6ff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.main .new a:hover {
+    text-decoration: underline;
+}
+
+.password-container {
+    position: relative;
+}
+
+.forgot-password {
+    float: right;
+    font-size: 12px;
+    right: 0 !important;
+    top: 0 !important;
+    position: absolute !important;
+    color: #58a6ff;
+    text-decoration: none;
+    background-color: transparent;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.forgot-password:hover,
+.forgot-password:focus{
+    text-decoration: underline;
+}
+
+.bad-input {
+    padding: 16px 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    border: 1px solid rgba(248,81,73,0.4);
+    border-radius: 6px;
+    background-image: linear-gradient(rgba(248,81,73,0.15), rgba(248,81,73,0.15));
+    color: #c9d1d9;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.success-flash {
+    padding: 16px 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    border: 1px solid rgba(35,134,54,0.4);
+    border-radius: 6px;
+    background-image: linear-gradient(rgba(35,134,54,0.15), rgba(35,134,54,0.15));
+    color: #c9d1d9;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #0D1117 inset !important;
+    -webkit-text-fill-color: #c9d1d9;
+}
+
+.logo {
+    text-align: center;
+    color: #F56600;
+    margin-bottom: 0;
+}
