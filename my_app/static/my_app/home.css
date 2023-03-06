@@ -5,3 +5,24 @@ body {
 h2 {
     color: orangered;
 }
+
+img {
+    margin-top:35px;
+    margin-bottom:5px;
+    margin-left: 10px;
+    margin-right: 20px;
+    height: 215px;
+    width: 215px;
+    
+}
+
+/*.container {
+ position:relative;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-wrap: wrap;
+ padding: 30px;
+ margin-top: 8%;
+}
+*/
