@@ -41,7 +41,7 @@ class Orders(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
 class OrderHistory(models.Model):
-    order_id = models.ForeignKey(Orders, primary_key = True, on_delete=models.CASCADE)
+    order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     
     class Meta:
@@ -49,7 +49,7 @@ class OrderHistory(models.Model):
             models.UniqueConstraint(fields = ['order_id', 'user_id'], name = "unique order")
         ]
 
-class Product(models.Model):
+class Post(models.Model):
     product_name = models.CharField(max_length=50, blank=False)
     product_desc = models.TextField(max_length= 200, blank=False)
     product_price = models.FloatField()
@@ -63,8 +63,8 @@ class Product(models.Model):
         return self.name
     
 class OrderProducts(models.Model):
-    order_id = models.ForeignKey(Orders, primary_key = True, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete = models.CASCADE)
+    order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Post, on_delete = models.CASCADE)
     quantity = models.IntegerField()
     class Meta:
         constraints = [
