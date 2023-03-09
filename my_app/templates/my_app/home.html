@@ -1,52 +1,49 @@
 {% extends "base.html" %}
 {% load static %}
-<!--{% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-{% endblock %}-->
 
 {% block content %}
-                  
-                  <div class="catalog">
-                    <div class="container"> 
-                      <img src="{% static 'my_app/airpods.jpg' %}">
-                      <h3>$110</h2>
-                      <h4>AirPods 2nd Generation</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/lebronjersey.jpg' %}">
-                      <h3>$100</h2>
-                      <h4>Miami Heat Lebron Jersey</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/applewatch.jpg' %}">
-                      <h3>$135</h2>
-                      <h4>Applewatch</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/cheetofsale.jpg' %}">
-                      <h3>$2500</h2>
-                      <h4>Ghost Cheeto</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/macbookpro.jpg' %}">
-                      <h3>$265</h2>
-                      <h4>Macbook Pro</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/bluetoothkeyboard.jpg' %}">
-                      <h3>$24</h2>
-                      <h4>MS Bluetooth Keyboard</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/shoes.jpg' %}">
-                      <h3>$200</h2>
-                      <h4>Kobe Grinchs</h4>
-                    </div>
-                    <div class="container"> 
-                      <img src="{% static 'my_app/worldcoins.jpg' %}">
-                      <h3>$30</h2>
-                      <h4>World Coins</h4>
-                    </div>
-                  </div>
-      
+
+      <div class="column"> 
+        <div class="row">
+                  <img src="{% static 'my_app/airpods.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+                  <img src="{% static 'my_app/lebronjersey.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+                  <img src="{% static 'my_app/applewatch.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+                  <img src="{% static 'my_app/cheetofsale.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+                <h2 style="padding-left: 65px; padding-right: 50px">$110</h2>
+                <p style="padding-left: 65px; padding-right: 50px">AirPods 2nd Generation</p>
+
+                 <!-- <h2>$90</h2>
+                  <p>Miami Heat Lebron James Jersey</p>
+                 
+                    <h2>$130</h2>
+                    <p>AppleWatch</p>
+                       
+                      <h2>$2500</h2>
+                      <p>Ghost Shape</p> -->
+        </div>
+       <!-- <div class="row">
+          <img src="{% static 'my_app/macbookpro.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+          <img src="{% static 'my_app/bluetoothkeyboard.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+          <img src="{% static 'my_app/shoes.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+          <img src="{% static 'my_app/worldcoins.jpg' %}" style="margin: 65px 65px 5px 65px" height="215px" width="215px">
+        <h2 style="padding-left: 65px; padding-right: 50px">$175</h2>
+        <p style="padding-left: 65px; padding-right: 50px">Macbook Pro</p> -->
+
+         <!-- <h2>$90</h2>
+          <p>Miami Heat Lebron James Jersey</p>
+         
+            <h2>$130</h2>
+            <p>AppleWatch</p>
+               
+              <h2>$2500</h2>
+              <p>Ghost Shape</p> -->
+      </div>
+      </div>
+
+     
+     <!-- <img src="{% static 'my_app/macbookpro.jpg' %}" style="margin:65px" height="215px" width="215px">
+      <img src="{% static 'my_app/bluetoothkeyboard.jpg' %}" style="margin:65px" height="215px" width="215px">
+      <img src="{% static 'my_app/shoes.jpg' %}" style="margin:65px" height="215px" width="215px">
+      <img src="{% static 'my_app/worldcoins.jpg' %}" style="margin:65px" height="215px" width="215px"> -->
+
 {% endblock %}
