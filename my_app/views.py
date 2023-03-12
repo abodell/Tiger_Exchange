@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Post
+from .models import Listing
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -8,7 +8,7 @@ def home(request):
     return render(request,'my_app/home.html')
 
 def test(request):
-    posts = Post.objects.all()
+    posts = Listing.objects.all()
     context = {
         'posts': posts
     }
