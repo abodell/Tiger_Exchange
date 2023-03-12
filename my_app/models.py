@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse_lazy
+
 User._meta.get_field('email')._unique = True
 
 # Create your models here.
@@ -20,8 +22,8 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-class Categories(models.Model):
-    category_name = models.CharField(max_length=50)
+class Category(models.Model):
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -50,17 +52,19 @@ class OrderHistory(models.Model):
         ]
 
 class Listing(models.Model):
-    product_name = models.CharField(max_length=50, blank=False)
-    product_desc = models.TextField(max_length= 200, blank=False)
-    product_price = models.FloatField()
-    image1 = models.FileField(blank=False)
-    image2 = models.FileField(blank=False)
-    image3 = models.FileField(blank=False)
-    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, blank=False)
+    description = models.TextField(max_length= 1024, blank=False)
+    price = models.FloatField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    cart = models.ManyToManyField(Cart, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True, upload_to='images/')
 
     def __str__(self):
-        return self.name
+        return self.title + " | " + str(self.author)
+
+    def get_absolute_url(self):
+        return reverse_lazy('my_app:detail_list', args=(str(self.id)))
     
 class OrderProducts(models.Model):
     order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
