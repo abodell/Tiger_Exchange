@@ -1,0 +1,16 @@
+{% extends 'my_app/bootstrap_base.html' %}
+
+{% block content %}
+
+<h1>Listings</h1>
+
+<ul>
+    {% for listing in object_list %}
+        <li>
+            <a href="{% url 'my_app:detail_list' listing.pk %}">{{ listing.title }}</a> 
+            - {{ listing.author }} | {{ listing.description }}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

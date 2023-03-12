@@ -1,0 +1,13 @@
+
+{% extends 'my_app/bootstrap_base.html' %}
+
+{% block content %}
+<h1>Title: {{ listing.title }}</h1>
+<h2>Author: {{ listing.author }}</h2>
+<p>Description: {{ listing.description }}</p>
+<p>Price: {{ listing.price }}</p>
+<img src="{{ listing.image.url }}">
+<br>
+<a href="{% url 'my_app:list' %}">GO Back</a>
+
+{% endblock %}
