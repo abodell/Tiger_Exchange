@@ -28,6 +28,7 @@ class TestDetailView(DetailView):
     template_name = 'my_app/test_list_detail.html'
 
 
+
 # class createListingView(LoginRequiredMixin, CreateView):
 #     model = Listing
 #     template_name = 'my_app/create_listing.html'
@@ -59,4 +60,3 @@ def createListingView(request):
     }
     
     return render(request,'my_app/create_listing.html', context=context)
-
