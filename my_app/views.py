@@ -10,7 +10,11 @@ from django.contrib import messages
 # Create your views here.
 
 def home(request):
-    return render(request,'my_app/home.html')
+    listings = Listing.objects.all()
+    context = {
+        'listings': listings
+    }
+    return render(request,'my_app/home.html', context=context)
 
 def test(request):
     posts = Listing.objects.all()

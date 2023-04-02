@@ -14,62 +14,15 @@
 </head>
 
 <div class = "grid-container">
+  {% for listing in listings %}
   <div class = "grid-item">
-    <img src = "{% static 'my_app/airpods.jpg' %}">
+    <img src = "./media/{{ listing.image }}">
     <div class = "text-container">
-      <h2>AirPods Pro</h2>
-      <p>$39.95</p>
+      <h2>{{listing.title}}</h2>
+      <p>{{listing.price}}</p>
     </div>
   </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/lebronjersey.jpg' %}">
-    <div class = "text-container">
-      <h2>Lebron Jersey</h2>
-      <p>$50.95</p>
-    </div>
-  </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/macbookpro.jpg' %}">
-    <div class = "text-container">
-      <h2>Macbook Pro</h2>
-      <p>$1500.95</p>
-    </div>
-  </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/shoes.jpg' %}">
-    <div class = "text-container">
-      <h2>Shoes</h2>
-      <p>$100.95</p>
-    </div>
-  </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/worldcoins.jpg' %}">
-    <div class = "text-container">
-      <h2>Coins</h2>
-      <p>$5.95</p>
-    </div>
-  </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/cheetofsale.jpg' %}">
-    <div class = "text-container">
-      <h2>Ghost Cheeto</h2>
-      <p>$2500.03</p>
-    </div>
-  </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/bluetoothkeyboard.jpg' %}">
-    <div class = "text-container">
-      <h2>MS Bluetooth Keyboard</h2>
-      <p>$30.00</p>
-    </div>
-  </div>
-  <div class = "grid-item">
-    <img src = "{% static 'my_app/applewatch.jpg' %}">
-    <div class = "text-container">
-      <h2>Applewatch</h2>
-      <p>$150.00</p>
-    </div>
-  </div>
+  {% endfor %}
 </div>
 </html>
 {% endblock %}
