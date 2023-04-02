@@ -43,7 +43,8 @@ def useraccount(request):
 #     def form_valid(self, form):
 #         form.instance.author = self.request.user
 #         return super().form_valid(form)
-    
+
+@login_required    
 def createListingView(request):
     if request.POST:
         title = request.POST['title']
@@ -64,3 +65,14 @@ def createListingView(request):
     }
     
     return render(request,'my_app/create_listing.html', context=context)
+
+@login_required
+def myListingsView(request):
+    my_listings = Listing.objects.filter(author=request.user)
+    context = {'listings': my_listings}
+    return render(request, 'my_app/my_listings.html', context=context)
+
+def listingDetailView(request, id):
+    listing = Listing.objects.get(id=id)
+    context = {'listing': listing}
+    return render(request, 'my_app/listing_detail.html', context=context)
