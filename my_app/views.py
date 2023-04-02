@@ -27,6 +27,13 @@ class TestDetailView(DetailView):
     model = Listing
     template_name = 'my_app/test_list_detail.html'
 
+def cart(request):
+    return render(request,'my_app/cart.html')
+
+def useraccount(request):
+    return render(request,'my_app/user_account.html')
+
+
 
 
 # class createListingView(LoginRequiredMixin, CreateView):
