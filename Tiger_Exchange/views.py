@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import PasswordChangeView
 from .forms import CreateUserForm
 from django.contrib.auth.models import User
+from django.views.defaults import page_not_found
 from my_app.models import Profile
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -26,6 +27,8 @@ def cart(request):
 def useraccount(request):
     current_user = request.user
     profile = User.objects.all().filter(username = current_user)
+    if not profile:
+        return render(request, 'registration/signup.html')
     context = {
         'profile': profile[0]
     }
