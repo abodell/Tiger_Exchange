@@ -1,0 +1,30 @@
+html {
+    box-sizing: border-box;
+  }
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.tt-container {
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-left: 50px;
+    display: grid;
+    gap: 50px;
+    grid-template-columns: 1fr 2fr;
+    /* border: 1px solid green; */
+}
+
+.tt-container .listing-image {
+    width: 100%;
+    object-fit: cover;
+    /* border: 1px solid red; */
+}
+
+.detail-container {
+    /* border: 1px solid yellow; */
+}
