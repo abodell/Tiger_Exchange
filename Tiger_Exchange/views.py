@@ -18,3 +18,8 @@ def SignupView(request):
     context = {'form': form}
     return render(request, 'registration/signup.html', context=context)
 
+def cart(request):
+    return render(request,'my_app/cart.html')
+
+def useraccount(request):
+    return render(request,'my_app/user_account.html')

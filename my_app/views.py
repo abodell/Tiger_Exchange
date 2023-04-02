@@ -16,13 +16,6 @@ def home(request):
     }
     return render(request,'my_app/home.html', context=context)
 
-def test(request):
-    posts = Listing.objects.all()
-    context = {
-        'posts': posts
-    }
-    return render(request, 'my_app/test.html', context=context)
-
 class testListView(ListView):
     model = Listing
     template_name = 'my_app/test_list_view.html'

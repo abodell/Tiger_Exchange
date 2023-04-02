@@ -24,5 +24,7 @@ urlpatterns = [
     path('',include('my_app.urls')),
     path("admin/", admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/signup', views.SignupView, name="signup")
+    path('accounts/signup', views.SignupView, name="signup"),
+    path('cart/', views.cart, name='cart'),
+    path('user_account/', views.useraccount, name='useraccount')
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
