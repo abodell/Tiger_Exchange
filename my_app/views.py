@@ -71,5 +71,6 @@ def myListingsView(request):
 
 def listingDetailView(request, id):
     listing = Listing.objects.get(id=id)
-    context = {'listing': listing}
+    is_owner = listing.author == request.user
+    context = {'listing': listing, 'is_owner': is_owner}
     return render(request, 'my_app/listing_detail.html', context=context)
