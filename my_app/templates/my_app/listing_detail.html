@@ -17,11 +17,14 @@
             <h3>Description </h3>
             <p>{{ listing.description }}</p>
             <hr>
+            <h3>Seller: <a class="link-primary link-underline-opacity-25 link-underline-opacity-100-hover" href="">{{ listing.author }}</a></h3>
+            <hr>
             <h3>Price: ${{ listing.price }}</h3>
             <hr>
             {% if not is_owner  %}
                 <button type="button" class="btn btn-success me-3">Add to Cart</button>
-                <button type="button" class="btn btn-primary">Add to Watchlist</button>
+                <button type="button" class="btn btn-primary me-3">Add to Watchlist</button>
+                <button type="button" class="btn btn-secondary">Message Seller</button>
             {%endif%}
         </div>
     </div>
