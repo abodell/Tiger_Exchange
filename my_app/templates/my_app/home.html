@@ -16,13 +16,14 @@
 
 <div class = "grid-container">
   {% for listing in listings %}
-  <a class = "text-decoration-none text-white" href="{% url 'my_app:listing_detail' listing.pk %}">
   <div class = "grid-item">
-    <img class = "img-fluid rounded" src = "./media/{{ listing.image }}">
-    <div class = "text-container m-3">
+    <a href = "{% url 'my_app:listing_detail' listing.pk %}"><img class = "img-fluid rounded" src = "./media/{{ listing.image }}"></a>
+    <a class = "text-decoration-none text-muted" href = "{% url 'my_app:listing_detail' listing.pk %}">
+      <div class = "text-container m-3">
       <h2 class = 'm-2'>{{listing.title}}</h2>
       <p>{{listing.price}}</p>
-    </div>
+      </div>
+    </a>
   </div>
   </a>
   {% endfor %}
