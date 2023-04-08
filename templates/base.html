@@ -101,6 +101,7 @@
                   <li><a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">Log out</a></li>
                   {% else %}
                   <li><a class="dropdown-item" href="{% url 'login' %}?next={{ request.path }}">Log in</a></li>
+                  <li><a class="dropdown-item" href="{% url 'signup' %}">Create an account</a></li>
                   {% endif %}
                 </ul>
             </div>
