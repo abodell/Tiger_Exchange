@@ -6,13 +6,22 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib import messages
-# from .forms import ListingForm
-# Create your views here.
 
 def home(request):
-    listings = Listing.objects.all()
+    queryset = Listing.objects.all()
+
+    # If a search query is submitted, filter the queryset by name
+    search_query = request.GET.get('q')
+    if search_query:
+        queryset = queryset.filter(title__icontains=search_query)
+
+    # If a filter value is submitted, filter the queryset by category
+    filter_value = request.GET.get('category')
+    if filter_value and filter_value != 'all':
+        queryset = queryset.filter(category=filter_value)
+
     context = {
-        'listings': listings
+        'listings': queryset,
     }
     return render(request,'my_app/home.html', context=context)
 
@@ -26,20 +35,6 @@ class TestDetailView(DetailView):
 
 def cart(request):
     return render(request,'my_app/cart.html')
-
-
-
-
-# class createListingView(LoginRequiredMixin, CreateView):
-#     model = Listing
-#     template_name = 'my_app/create_listing.html'
-#     # form_class = ListingForm
-#     # fields = '__all__'
-#     fields = ('title', 'description', 'price', 'category', 'image')
-
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
 
 @login_required    
 def createListingView(request):
@@ -65,8 +60,25 @@ def createListingView(request):
 
 @login_required
 def myListingsView(request):
-    my_listings = Listing.objects.filter(author=request.user)
-    context = {'listings': my_listings}
+
+    queryset = Listing.objects.filter(author=request.user)
+
+    # If a search query is submitted, filter the queryset by name
+    search_query = request.GET.get('q')
+    if search_query:
+        queryset = queryset.filter(title__icontains=search_query)
+
+    # If a filter value is submitted, filter the queryset by category
+    filter_value = request.GET.get('category')
+    if filter_value and filter_value != 'all':
+        queryset = queryset.filter(category=filter_value)
+
+    context = {
+        'listings': queryset,
+    }
+
+    # my_listings = Listing.objects.filter(author=request.user)
+    context = {'listings': queryset}
     return render(request, 'my_app/my_listings.html', context=context)
 
 def listingDetailView(request, id):

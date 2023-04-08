@@ -1,31 +1,31 @@
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en" data-bs-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-    <title>My Listings</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'my_app/css/my_listings.css' %}">
-    
-</head>
-<body>
-    <div class="container mt-5 tt-container">
-        <h1 class="tt-heading">My Listings</h1>
-        <div class="grid-container">
-            {% for listing in listings %}
-            <a class="to-detail-view" href="{% url 'my_app:listing_detail' listing.pk %}">
-            <div class="listing-container">
-                <img src="{{ listing.image.url }}">
-                <div class="listing-container__footer">
-                    <p class="listing-container__price">${{ listing.price|truncatechars:25|default:"..." }}</p>
-                    <h3 class="listing-container__title">{{ listing.title|truncatechars:27|default:"..." }}</h3>
-                </div>
+
+{% block title %}My Listings{% endblock %}
+
+{% block head%}
+<link rel="stylesheet" type="text/css" href="{% static 'my_app/css/my_listings.css' %}">
+{% endblock %}
+
+{% block search%}
+{% url 'my_app:my_listings' %}
+{% endblock%}
+
+{% block content%}
+<div class="tt-container">
+    <h1 class="tt-heading">My Listings</h1>
+    <div class="grid-container">
+        {% for listing in listings %}
+        <a class="to-detail-view" href="{% url 'my_app:listing_detail' listing.pk %}">
+        <div class="listing-container">
+            <img src="{{ listing.image.url }}">
+            <div class="listing-container__footer">
+                <p class="listing-container__price">${{ listing.price|truncatechars:25|default:"..." }}</p>
+                <h3 class="listing-container__title">{{ listing.title|truncatechars:27|default:"..." }}</h3>
             </div>
-            </a>
-            {% endfor %}
         </div>
+        </a>
+        {% endfor %}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
-</body>
-</html>
+</div>
+{% endblock %}

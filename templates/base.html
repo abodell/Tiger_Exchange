@@ -1,18 +1,21 @@
 {% load static %}
 
 
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
-  
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    
     <link rel="stylesheet" type="text/css" href="{% static 'css/header_footer.css' %}">
-    <title>Tiger Exchange</title>
+    {% block head %} {% endblock %}
 </head>
 
 <body>
@@ -23,29 +26,97 @@
           </div>
         {% endfor %}
     {% endif %}
-    <header>
-        <div class = "logo">
-            <h3>Tiger Exchange</h3>
+    <header class="header__">
+        <div class = "header__logo">
+            <a href="{% url 'my_app:home'%}"><img src="{% static 'tiger_exchange.svg' %}"></a>
         </div>
-        <div class = "searchbar">
-            <select class = "categories">{% block category %}
-            {% endblock %}
-            </select>
-            <input type = "search" class = "search" placeholder = "Search for anything">
+
+        <div class = "header__searchbar">
+            <form action="{% block search %}{% url 'my_app:home' %}{% endblock %}" class="header__searchbar-form">
+                <select class="header__searchbar-categories" name="category">
+                    <option value="all" {% if request.GET.category == 'all' %}selected{% endif %}>All Categories</option>
+                    <option value="1" {% if request.GET.category == '1' %}selected{% endif %}>Antiques</option>
+                    <option value="2" {% if request.GET.category == '2' %}selected{% endif %}>Art</option>
+                    <option value="3" {% if request.GET.category == '3' %}selected{% endif %}>Baby</option>
+                    <option value="4" {% if request.GET.category == '4' %}selected{% endif %}>Books</option>
+                    <option value="5" {% if request.GET.category == '5' %}selected{% endif %}>Business & Industrial</option>
+                    <option value="6" {% if request.GET.category == '6' %}selected{% endif %}>Cameras & Photo</option>
+                    <option value="7" {% if request.GET.category == '7' %}selected{% endif %}>Cell Phones & Accessories</option>
+                    <option value="8" {% if request.GET.category == '8' %}selected{% endif %}>Clothing, Shoes & Accessories</option>
+                    <option value="9" {% if request.GET.category == '9' %}selected{% endif %}>Coins & Paper Money</option>
+                    <option value="10" {% if request.GET.category == '10' %}selected{% endif %}>Collectibles</option>
+                    <option value="11" {% if request.GET.category == '11' %}selected{% endif %}>Computers/Tablets & Networking</option>
+                    <option value="12" {% if request.GET.category == '12' %}selected{% endif %}>Consumer Electronics</option>
+                    <option value="13" {% if request.GET.category == '13' %}selected{% endif %}>Crafts</option>
+                    <option value="14" {% if request.GET.category == '14' %}selected{% endif %}>Dolls & Bears</option>
+                    <option value="15" {% if request.GET.category == '15' %}selected{% endif %}>DVDs & Movies</option>
+                    <option value="16" {% if request.GET.category == '16' %}selected{% endif %}>Motors</option>
+                    <option value="17" {% if request.GET.category == '17' %}selected{% endif %}>Entertainment Memorabilia</option>
+                    <option value="18" {% if request.GET.category == '18' %}selected{% endif %}>Gift Cards & Coupons</option>
+                    <option value="19" {% if request.GET.category == '19' %}selected{% endif %}>Health & Beauty</option>
+                    <option value="20" {% if request.GET.category == '20' %}selected{% endif %}>Home & Garden</option>
+                    <option value="21" {% if request.GET.category == '21' %}selected{% endif %}>Jewelry & Watches</option>
+                    <option value="22" {% if request.GET.category == '22' %}selected{% endif %}>Music</option>
+                    <option value="23" {% if request.GET.category == '23' %}selected{% endif %}>Musical Instruments & Gear</option>
+                    <option value="24" {% if request.GET.category == '24' %}selected{% endif %}>Pet Supplies</option>
+                    <option value="25" {% if request.GET.category == '25' %}selected{% endif %}>Pottery & Glass</option>
+                    <option value="26" {% if request.GET.category == '26' %}selected{% endif %}>Real Estate</option>
+                    <option value="27" {% if request.GET.category == '27' %}selected{% endif %}>Specialty Services</option>
+                    <option value="28" {% if request.GET.category == '28' %}selected{% endif %}>Sporting Goods</option>
+                    <option value="29" {% if request.GET.category == '29' %}selected{% endif %}>Sports Mem, Cards & Fan Shop</option>
+                    <option value="30" {% if request.GET.category == '30' %}selected{% endif %}>Stamps</option>
+                    <option value="31" {% if request.GET.category == '31' %}selected{% endif %}>Tickets & Experiences</option>
+                    <option value="32" {% if request.GET.category == '32' %}selected{% endif %}>Toys & Hobbies</option>
+                    <option value="33" {% if request.GET.category == '33' %}selected{% endif %}>Travel</option>
+                    <option value="34" {% if request.GET.category == '34' %}selected{% endif %}>Video Games & Consoles</option>
+                    <option value="35" {% if request.GET.category == '35' %}selected{% endif %}>Everything Else</option>
+                </select>
+                <input class="header__searchbar-input" type = "search" name="q" class = "search" placeholder = "Search for anything">
+                <button class="header__searchbar-btn" type="submit">
+                    <img class="header__searchbar-icon" src="{% static 'search.svg' %}">
+                </button>
+            </form>
         </div>
-        <div class = "cart-account">
-            <a href="{% url 'cart' %}" ><img src = "{% static 'my_app/icons8-shopping-cart-80.png' %}" style="height: 75px; width: 75px; padding-right: 17px"></a> 
+
+        <div class="header__right-container">
+            <a class="header__right-container-cart" href="{% url 'cart' %}" ><img src="{% static 'cart.svg' %}"></a> 
+
+            <div class="dropdown header__right-container-account">
+                <a class="dropdown-toggle header__right-container-dropdown-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                </a>
+              
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'useraccount' %}">Account</a></li>
+                  <li><a class="dropdown-item" href="#">Messages</a></li>
+                  <li><a class="dropdown-item" href="#">Watchlist</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'my_app:my_listings' %}">My listings</a></li>
+                  <li><a class="dropdown-item" href="{% url 'my_app:create_listing' %}">Sell an item</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  {% if user.is_authenticated%}
+                  <li><a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">Log out</a></li>
+                  {% else %}
+                  <li><a class="dropdown-item" href="{% url 'login' %}?next={{ request.path }}">Log in</a></li>
+                  {% endif %}
+                </ul>
+            </div>
+
         </div>
-        <div class = "user-account">
-            <a href="{% url 'useraccount' %}" ><img src = "{% static 'my_app/icons8-circled-a-50.png' %}" style="height: 70px; width: 85px; padding-left: 23px; padding-right: 10px"></a>
-         </div>
     </header>
+
     {% block content %}
  
     {% endblock %}
+
     <footer>
        <a>Contact Us</a>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
