@@ -5,6 +5,7 @@
 
 {% block head%}
 <link rel="stylesheet" type="text/css" href="{% static 'my_app/css/listing_detail.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 {% endblock %}
 
 {% block content%}
@@ -20,11 +21,19 @@
         <hr>
         <h3>Price: ${{ listing.price }}</h3>
         <hr>
-        {% if not is_owner  %}
-            <button type="button" class="btn btn-success me-3">Add to Cart</button>
+        {% if not is_owner and user.is_authenticated %}
+        <form method = 'POST' action = "{% url 'my_app:listing_detail' listing.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success me-3">Add to Cart</button>
             <button type="button" class="btn btn-primary me-3">Add to Watchlist</button>
             <button type="button" class="btn btn-secondary">Message Seller</button>
+        </form>
         {%endif%}
+        {% if message %}
+        <p class = "alert alert-success">
+            {{ message }}
+        </p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
