@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Change Done</title>
+    <title>Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
@@ -21,7 +21,7 @@
     <a class = "text-decoration-none text-muted" href = "{% url 'my_app:listing_detail' listing.pk %}">
       <div class = "text-container m-3">
       <h2 class = 'm-2'>{{listing.title}}</h2>
-      <p>{{listing.price}}</p>
+      <p>${{listing.price}}</p>
       </div>
     </a>
   </div>

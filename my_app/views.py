@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Listing, Category, Profile
+from .models import Listing, Category, Profile, Cart
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,6 +27,10 @@ class TestDetailView(DetailView):
 
 def cart(request):
     return render(request,'my_app/cart.html')
+
+@login_required
+def createCartView(request):
+    return render(request, 'my_app/cart.html')
 
 
 
