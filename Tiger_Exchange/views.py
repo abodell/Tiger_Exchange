@@ -33,10 +33,15 @@ def cart(request):
         return render(request, 'registration/signup.html')
     userID = profile[0].pk
     cart = Cart.objects.filter(user_id = userID)
-    cartListings = Listing.objects.all().filter(cart = cart[0])
-    context = {
+    if len(cart) > 0:
+        cartListings = Listing.objects.all().filter(cart = cart[0])
+        context = {
         'listings': cartListings
-    }
+        }
+    else:
+        context = {
+            'message': "You have nothing in your cart!"
+        }
     return render(request,'my_app/cart.html', context=context)
 
 
