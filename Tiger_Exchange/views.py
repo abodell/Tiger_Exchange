@@ -7,6 +7,7 @@ from django.views.defaults import page_not_found
 from my_app.models import Profile, Cart, Listing, WatchList
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 
 def SignupView(request):
     form = CreateUserForm()
@@ -36,9 +37,14 @@ def cart(request):
     userID = profile[0].pk
     cart = Cart.objects.filter(user_id = userID)
     cartListings = Listing.objects.all().filter(cart = cart[0])
+    paginator = Paginator(cartListings, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     if len(cartListings) > 0:
         context = {
-        'listings': cartListings
+        'listings': cartListings,
+        'page_obj': page_obj,
         }
     else:
         context = {
@@ -55,9 +61,14 @@ def watchlist(request):
     userID = profile[0].pk
     watchlist = WatchList.objects.filter(user_id = userID)
     watchlistListings = Listing.objects.all().filter(watchlist = watchlist[0])
+    paginator = Paginator(watchlistListings, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     if len(watchlistListings) > 0:
         context = {
-            'listings': watchlistListings
+            'listings': watchlistListings,
+            'page_obj': page_obj,
         }
     else:
         context = {
