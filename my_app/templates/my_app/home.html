@@ -14,7 +14,7 @@
 
 <div class="grid-container">
   {% for listing in listings %}
-  <a class="to-detail-view" href="{% url 'my_app:listing_detail' listing.pk %}">
+  <a class="to-detail-view" href="{% url 'my_app:listing_detail' listing.pk 'detail' %}">
   <div class="listing-container">
       <img src="{{ listing.image.url }}">
       <div class="listing-container__footer">

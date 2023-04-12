@@ -4,7 +4,7 @@ from .forms import CreateUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.defaults import page_not_found
-from my_app.models import Profile, Cart, Listing
+from my_app.models import Profile, Cart, Listing, WatchList
 from django.contrib import messages
 from django.urls import reverse_lazy
 
@@ -20,6 +20,8 @@ def SignupView(request):
             newUser = User.objects.get(username = user)
             cart = Cart(user_id = newUser, quantity = 0)
             cart.save()
+            watchlist = WatchList(user_id = newUser)
+            watchlist.save()
             return redirect('login')
     
     context = {'form': form}
@@ -43,6 +45,25 @@ def cart(request):
             'message': "You have nothing in your cart!"
         }
     return render(request,'my_app/cart.html', context=context)
+
+@login_required
+def watchlist(request):
+    current_user = request.user
+    profile = User.objects.all().filter(username = current_user)
+    if not profile:
+        return render(request, 'registration/signup.html')
+    userID = profile[0].pk
+    watchlist = WatchList.objects.filter(user_id = userID)
+    watchlistListings = Listing.objects.all().filter(watchlist = watchlist[0])
+    if len(watchlistListings) > 0:
+        context = {
+            'listings': watchlistListings
+        }
+    else:
+        context = {
+            'message': "You have nothing on your watchlist!"
+        }
+    return render(request, 'my_app/watchlist.html', context=context)
 
 
 def useraccount(request):
