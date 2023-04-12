@@ -21,7 +21,7 @@ def home(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
-    paginator = Paginator(queryset, 50)
+    paginator = Paginator(queryset, 75)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
 
@@ -79,7 +79,7 @@ def myListingsView(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
-    paginator = Paginator(queryset, 50)
+    paginator = Paginator(queryset, 75)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
 
