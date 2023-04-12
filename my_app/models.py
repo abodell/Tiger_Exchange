@@ -33,6 +33,10 @@ class Cart(models.Model):
     quantity = models.IntegerField(blank=False)
     # believe total price would be a derived attribute so we wouldn't store it
 
+class WatchList(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Orders(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField(max_length = 40)
@@ -57,6 +61,7 @@ class Listing(models.Model):
     price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     cart = models.ManyToManyField(Cart, blank=True)
+    watchlist = models.ManyToManyField(WatchList, blank = True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
 

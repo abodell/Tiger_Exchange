@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Listing, Category, Profile, Cart
+from .models import Listing, Category, Profile, Cart, WatchList
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView
@@ -79,17 +79,22 @@ def myListingsView(request):
     context = {'listings': queryset}
     return render(request, 'my_app/my_listings.html', context=context)
 
-def listingDetailView(request, id):
+def listingDetailView(request, id, type = 'None'):
     # will check request method then handle accordingly
     listing = Listing.objects.get(id=id)
     message = ""
+    current_user = request.user
+    profile = User.objects.all().filter(username = current_user)
+    userID = profile[0].pk
     if request.POST:
-        current_user = request.user
-        profile = User.objects.all().filter(username = current_user)
-        userID = profile[0].pk
-        cart = Cart.objects.all().filter(user_id = userID)
-        listing.cart.add(cart[0])
-        message = "Item Added to Cart!"
+        if type == 'cart':
+            cart = Cart.objects.all().filter(user_id = userID)
+            listing.cart.add(cart[0])
+            message = "Item Added to Cart!"
+        elif type == 'watchlist':
+            watchlist = WatchList.objects.all().filter(user_id = userID)
+            listing.watchlist.add(watchlist[0])
+            message = 'Item Added to Your WatchList!'
     is_owner = listing.author == request.user
     context = {'listing': listing, 'is_owner': is_owner, 'message': message}
     return render(request, 'my_app/listing_detail.html', context=context)

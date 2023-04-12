@@ -9,5 +9,5 @@ urlpatterns = [
     # path('test_listings/<int:pk>', views.TestDetailView.as_view(), name='detail_list'),
     path('create_listing/', views.createListingView, name='create_listing'),
     path('my_listings/', views.myListingsView, name='my_listings'),
-    path('listings/<int:id>', views.listingDetailView, name='listing_detail')
+    path('listings/<int:id>/<str:type>', views.listingDetailView, name='listing_detail')
 ]
