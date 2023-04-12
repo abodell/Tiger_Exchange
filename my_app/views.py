@@ -7,9 +7,14 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 def home(request):
     queryset = Listing.objects.all()
+    paginator = Paginator(queryset, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     # If a search query is submitted, filter the queryset by name
     search_query = request.GET.get('q')
@@ -21,8 +26,10 @@ def home(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+
     context = {
         'listings': queryset,
+        'page_obj': page_obj,
     }
     return render(request,'my_app/home.html', context=context)
 
