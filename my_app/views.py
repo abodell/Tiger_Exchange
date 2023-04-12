@@ -21,6 +21,7 @@ def home(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+
     paginator = Paginator(queryset, 75)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
@@ -79,6 +80,7 @@ def myListingsView(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+
     paginator = Paginator(queryset, 75)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
@@ -102,12 +104,15 @@ def listingDetailView(request, id, type = 'None'):
     if request.POST:
         if type == 'cart':
             cart = Cart.objects.all().filter(user_id = userID)
+
             listing.cart.add(cart[0])
             message = "Item Added to Cart!"
         elif type == 'watchlist':
             watchlist = WatchList.objects.all().filter(user_id = userID)
+           
             listing.watchlist.add(watchlist[0])
             message = 'Item Added to Your WatchList!'
     is_owner = listing.author == request.user
-    context = {'listing': listing, 'is_owner': is_owner, 'message': message}
+    context = {'listing': listing, 'is_owner': is_owner, 'message': message,}
     return render(request, 'my_app/listing_detail.html', context=context)
+
