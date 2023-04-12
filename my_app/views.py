@@ -20,14 +20,19 @@ def home(request):
     search_query = request.GET.get('q')
     if search_query:
         queryset = queryset.filter(title__icontains=search_query)
-
     # If a filter value is submitted, filter the queryset by category
     filter_value = request.GET.get('category')
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+    paginator = Paginator(queryset, 50)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
 
     context = {
+        'num_pages': paginator.num_pages,
+        'search': search_query,
+        'category': filter_value,
         'listings': queryset,
         'page_obj': page_obj,
     }
@@ -83,13 +88,17 @@ def myListingsView(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+    paginator = Paginator(queryset, 50)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
     context = {
+        'num_pages': paginator.num_pages,
+        'search': search_query,
+        'category': filter_value,
         'listings': queryset,
         'page_obj': page_obj,
     }
-
-    # my_listings = Listing.objects.filter(author=request.user)
-    context = {'listings': queryset}
     return render(request, 'my_app/my_listings.html', context=context)
 
 def listingDetailView(request, id, type = 'None'):
