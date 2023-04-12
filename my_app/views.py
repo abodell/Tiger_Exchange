@@ -11,6 +11,10 @@ from django.core.paginator import Paginator
 
 def home(request):
     queryset = Listing.objects.all()
+    paginator = Paginator(queryset, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     # If a search query is submitted, filter the queryset by name
     search_query = request.GET.get('q')
@@ -68,6 +72,11 @@ def createListingView(request):
 def myListingsView(request):
 
     queryset = Listing.objects.filter(author=request.user)
+    paginator = Paginator(queryset, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
 
     # If a search query is submitted, filter the queryset by name
     search_query = request.GET.get('q')
@@ -102,12 +111,14 @@ def listingDetailView(request, id, type = 'None'):
     if request.POST:
         if type == 'cart':
             cart = Cart.objects.all().filter(user_id = userID)
+
             listing.cart.add(cart[0])
             message = "Item Added to Cart!"
         elif type == 'watchlist':
             watchlist = WatchList.objects.all().filter(user_id = userID)
+           
             listing.watchlist.add(watchlist[0])
             message = 'Item Added to Your WatchList!'
     is_owner = listing.author == request.user
-    context = {'listing': listing, 'is_owner': is_owner, 'message': message}
+    context = {'listing': listing, 'is_owner': is_owner, 'message': message,}
     return render(request, 'my_app/listing_detail.html', context=context)
