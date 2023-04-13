@@ -36,13 +36,10 @@
     <a class="to-detail-view" href="{% url 'my_app:listing_detail' listing.pk 'detail' %}">
     <div class="listing-container">
         <img src="{{ listing.image.url }}">
-        <div class = "d-flex justify-content-between">
             <div class="listing-container__footer">
                 <p class="listing-container__price">${{ listing.price|truncatechars:25|default:"..." }}</p>
                 <h3 class="listing-container__title">{{ listing.title|truncatechars:27|default:"..." }}</h3>
             </div>
-            <a style = "text-decoration: none; outline: none; color: inherit;" href = "{% url 'my_app:create_listing'%}"><i class = "bi bi-trash m-3 " style = "font-size: 2rem;"></i></a>
-        </div>
     </div>
     </a>
     {% endfor %}
