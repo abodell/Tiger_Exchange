@@ -37,14 +37,46 @@ def cart(request):
     userID = profile[0].pk
     cart = Cart.objects.filter(user_id = userID)
     cartListings = Listing.objects.all().filter(cart = cart[0])
-    paginator = Paginator(cartListings, 15)
 
-    page_number = request.GET.get('page')
+    # If a search query is submitted, filter the queryset by name
+    search_query = request.GET.get('q')
+    if search_query:
+        cartListings = cartListings.filter(title__icontains=search_query)
+
+    # If a filter value is submitted, filter the queryset by category
+    filter_value = request.GET.get('category')
+    if filter_value and filter_value != 'all':
+        cartListings = cartListings.filter(category=filter_value)
+
+    cartListings = cartListings.order_by('?')
+
+    paginator = Paginator(cartListings, 50)
+    page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
+
+    page_range = paginator.page_range
+    current_index = page_range.index(page_obj.number)
+    max_index = len(page_range)
+    start_index = max(current_index - 4, 0)
+    end_index = min(max_index, start_index + 9)
+
+    if end_index - start_index < 9:
+        if start_index == 0:
+            end_index = min(9, max_index)
+        else:
+            start_index = max(0, end_index - 9)
+
+    page_range = page_range[start_index:end_index]
+
+
     if len(cartListings) > 0:
         context = {
-        'listings': cartListings,
-        'page_obj': page_obj,
+            'listings': cartListings,
+            'page_obj': page_obj,
+            'num_pages': paginator.num_pages,
+            'page_range': page_range,
+            'search': search_query,
+            'category': filter_value,
         }
     else:
         context = {
@@ -61,14 +93,43 @@ def watchlist(request):
     userID = profile[0].pk
     watchlist = WatchList.objects.filter(user_id = userID)
     watchlistListings = Listing.objects.all().filter(watchlist = watchlist[0])
-    paginator = Paginator(watchlistListings, 15)
 
-    page_number = request.GET.get('page')
+    # If a search query is submitted, filter the queryset by name
+    search_query = request.GET.get('q')
+    if search_query:
+        watchlistListings = watchlistListings.filter(title__icontains=search_query)
+
+    # If a filter value is submitted, filter the queryset by category
+    filter_value = request.GET.get('category')
+    if filter_value and filter_value != 'all':
+        watchlistListings = watchlistListings.filter(category=filter_value)
+
+    watchlistListings = watchlistListings.order_by('?')
+
+    paginator = Paginator(watchlistListings, 50)
+    page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
+
+    page_range = paginator.page_range
+    current_index = page_range.index(page_obj.number)
+    max_index = len(page_range)
+    start_index = max(current_index - 4, 0)
+    end_index = min(max_index, start_index + 9)
+    if end_index - start_index < 9:
+        if start_index == 0:
+            end_index = min(9, max_index)
+        else:
+            start_index = max(0, end_index - 9)
+    page_range = page_range[start_index:end_index]
+
     if len(watchlistListings) > 0:
         context = {
+            'num_pages': paginator.num_pages,
             'listings': watchlistListings,
             'page_obj': page_obj,
+            'page_range': page_range,
+            'search': search_query,
+            'category': filter_value,
         }
     else:
         context = {

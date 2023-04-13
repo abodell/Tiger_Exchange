@@ -21,10 +21,24 @@ def home(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+    queryset = queryset.order_by('?')
 
-    paginator = Paginator(queryset, 75)
+    paginator = Paginator(queryset, 50)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
+
+    page_range = paginator.page_range
+    current_index = page_range.index(page_obj.number)
+    max_index = len(page_range)
+    start_index = max(current_index - 4, 0)
+    end_index = min(max_index, start_index + 9)
+    if end_index - start_index < 9:
+        if start_index == 0:
+            end_index = min(9, max_index)
+        else:
+            start_index = max(0, end_index - 9)
+    page_range = page_range[start_index:end_index]
+
 
     context = {
         'num_pages': paginator.num_pages,
@@ -32,6 +46,7 @@ def home(request):
         'category': filter_value,
         'listings': queryset,
         'page_obj': page_obj,
+        'page_range': page_range
     }
     return render(request,'my_app/home.html', context=context)
 
@@ -80,10 +95,23 @@ def myListingsView(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
+    queryset = queryset.order_by('?')
 
-    paginator = Paginator(queryset, 75)
+    paginator = Paginator(queryset, 50)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
+
+    page_range = paginator.page_range
+    current_index = page_range.index(page_obj.number)
+    max_index = len(page_range)
+    start_index = max(current_index - 4, 0)
+    end_index = min(max_index, start_index + 9)
+    if end_index - start_index < 9:
+        if start_index == 0:
+            end_index = min(9, max_index)
+        else:
+            start_index = max(0, end_index - 9)
+    page_range = page_range[start_index:end_index]
 
     context = {
         'num_pages': paginator.num_pages,
@@ -91,6 +119,7 @@ def myListingsView(request):
         'category': filter_value,
         'listings': queryset,
         'page_obj': page_obj,
+        'page_range': page_range
     }
     return render(request, 'my_app/my_listings.html', context=context)
 
@@ -116,3 +145,91 @@ def listingDetailView(request, id, type = 'None'):
     context = {'listing': listing, 'is_owner': is_owner, 'message': message,}
     return render(request, 'my_app/listing_detail.html', context=context)
 
+
+import requests
+import random
+from django.core.files.base import ContentFile
+import os
+def seedData(request):
+    categoryMap = {
+        "smartphones": 7,
+        "laptops": 11,
+        "fragrances": 19,
+        "skincare": 19,
+        "groceries": 35,
+        "home-decoration": 20,
+        "furniture": 20,
+        "tops": 8,
+        "womens-dresses": 8,
+        "womens-shoes": 8,
+        "mens-shirts": 8,
+        "mens-shoes": 8,
+        "mens-watches": 21,
+        "womens-watches": 21,
+        "womens-bags": 8,
+        "womens-jewellery": 21,
+        "sunglasses": 8,
+        "automotive": 16, 
+        "motorcycle": 16,
+        "lighting": 35
+    }
+    for _ in range(50):
+        response = requests.get("https://dummyjson.com/products?limit=0")
+        data = response.json()
+
+        product = data['products'][0]
+        for product in data['products']:
+            title = product['title']
+            description = product['description']
+            price = product['price']
+            category_text = product['category']
+            category_id = categoryMap[category_text]
+            category = Category.objects.get(id=category_id)
+            random_user = random.choice(User.objects.all())
+
+            listing = Listing(
+                title=title,
+                description=description,
+                price=price,
+                category=category,
+                author=random_user,
+            )
+            listing.save()
+
+            image_url = product['images'][0]
+            response = requests.get(image_url)
+            if response.status_code == 200:
+                
+                _, ext = os.path.splitext(image_url)
+                ext = ext.lower()
+
+                # Replace spaces with underscores and append the image extension
+                image_name = f'{title.replace(" ", "_")}{ext}'
+                listing.image.save(image_name, ContentFile(response.content), save=True)
+            else:
+                print(f"Failed to fetch image for listing {title}")
+
+    return HttpResponse("Data seeding successful.")
+
+
+def createAccounts(request):
+    for i in range(100):
+        username = f'user{i}'
+        if User.objects.filter(username=username).exists():
+            continue
+        email = f'user{i}@gmail.com'
+        if User.objects.filter(email=email).exists():
+            continue
+        password = "Password*"
+        user = User.objects.create_user(username=username, password=password, email=email)
+        user.save()
+
+    return HttpResponse("created users successfully")
+
+def deleteAllListings(request):
+    Listing.objects.all().delete()
+    return HttpResponse("deleted all listings")
+
+def deleteListing(request, id):
+    Listing.objects.filter(id=id).delete()
+    return HttpResponse(f'deleted listing id {id}')

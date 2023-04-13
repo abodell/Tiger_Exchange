@@ -12,7 +12,7 @@
 {% endblock%}
 
 {% block content%}
-<h1 class="tt-heading">My Listings</h1>
+<h1 style="text-align: center; color: #522D80; margin-top: .5rem; margin-bottom: 3rem">My Listings</h1>
 <div class="grid-container">
     {% for listing in page_obj %}
     <a class="to-detail-view" href="{% url 'my_app:listing_detail' listing.pk 'detail' %}">
@@ -38,7 +38,7 @@
             </li>
             {% endif %}
 
-            {% for page in page_obj.paginator.page_range %}
+            {% for page in page_range %}
                 {% if page_obj.number == page%}
                     <li class="page-item active"><a class="page-link" href="#">{{ page }}</a></li>
                 {% else %}

@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.core.files.storage import default_storage
 from django.urls import reverse_lazy
 
 User._meta.get_field('email')._unique = True
@@ -21,6 +22,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+    
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -70,6 +72,11 @@ class Listing(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('my_app:detail_list', args=(str(self.id)))
+
+@receiver(post_delete, sender=Listing)
+def delete_image_on_listing_delete(sender, instance, **kwargs):
+    if instance.image:
+        default_storage.delete(instance.image.path)
     
 class OrderProducts(models.Model):
     order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
