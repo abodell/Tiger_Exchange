@@ -123,14 +123,21 @@ def myListingsView(request):
     }
     return render(request, 'my_app/my_listings.html', context=context)
 
+from django.contrib.auth.views import LoginView
+
 def listingDetailView(request, id, type = 'None'):
     # will check request method then handle accordingly
     listing = Listing.objects.get(id=id)
     message = ""
-    current_user = request.user
-    profile = User.objects.all().filter(username = current_user)
-    userID = profile[0].pk
+
     if request.POST:
+        if not request.user.is_authenticated:
+            return redirect(f'/accounts/login/?next=/listings/{id}/detail')
+        
+        current_user = request.user
+        profile = User.objects.all().filter(username = current_user)
+        userID = profile[0].pk
+
         if type == 'cart':
             cart = Cart.objects.all().filter(user_id = userID)
 
@@ -141,6 +148,8 @@ def listingDetailView(request, id, type = 'None'):
            
             listing.watchlist.add(watchlist[0])
             message = 'Item Added to Your WatchList!'
+
+          
     is_owner = listing.author == request.user
     context = {'listing': listing, 'is_owner': is_owner, 'message': message,}
     return render(request, 'my_app/listing_detail.html', context=context)

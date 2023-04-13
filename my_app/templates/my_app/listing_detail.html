@@ -22,7 +22,7 @@
         <h3>Price: ${{ listing.price }}</h3>
         <hr>
         <div class = "d-flex">
-            {% if not is_owner and user.is_authenticated %}
+            {% if not is_owner %}
             <form method = 'POST' action = "{% url 'my_app:listing_detail' listing.pk 'cart' %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success me-3">Add to Cart</button>
