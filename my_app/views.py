@@ -242,3 +242,27 @@ def deleteAllListings(request):
 def deleteListing(request, id):
     Listing.objects.filter(id=id).delete()
     return HttpResponse(f'deleted listing id {id}')
+
+
+
+from chat.models import Contact, Chat
+
+@login_required
+def create_chat(request, seller_pk):
+    # Get or create the current user's Contact object
+    buyer_contact, created = Contact.objects.get_or_create(user=request.user)
+
+    # Get or create the seller's Contact object
+    seller_contact, created = Contact.objects.get_or_create(user_id=seller_pk)
+
+    # Check if a chat room with these two participants already exists
+    chat_room = Chat.objects.filter(participants=buyer_contact).filter(participants=seller_contact).first()
+
+    if not chat_room:
+        # Create a new chat room with the buyer and seller as participants
+        chat_room = Chat.objects.create()
+        chat_room.participants.add(buyer_contact, seller_contact)
+        chat_room.save()
+
+    # Redirect the user to the new chat room
+    return redirect('chat:room', room_name=chat_room.pk)

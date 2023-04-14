@@ -33,6 +33,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    "channels",
+    "chat.apps.ChatConfig",
     "my_app.apps.MyAppConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -140,3 +143,19 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'admin <noreply@tigerexchange.com>'
+
+# ASGI_APPLICATION = "Tiger_Exchange.routing.application"
+ASGI_APPLICATION = "Tiger_Exchange.asgi.application"
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
