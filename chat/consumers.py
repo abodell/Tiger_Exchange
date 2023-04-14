@@ -7,9 +7,9 @@ from .models import Message, Chat, Contact
 
 User = get_user_model()
 
-def get_last_10_messages(chatId):
+def get_last_30_messages(chatId):
     chat = get_object_or_404(Chat, id=chatId)
-    return chat.messages.order_by('timestamp').all()[:10]
+    return chat.messages.order_by('timestamp').all()[:30]
 
 
 def get_user_contact(username):
@@ -23,7 +23,7 @@ def get_current_chat(chatId):
 class ChatConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
-        messages = get_last_10_messages(data['chatId'])
+        messages = get_last_30_messages(data['chatId'])
         content = {
             'command': 'messages',
             'messages': self.messages_to_json(messages)
@@ -97,3 +97,5 @@ class ChatConsumer(WebsocketConsumer):
     def chat_message(self, event):
         message = event['message']
         self.send(text_data=json.dumps(message))
+
+
