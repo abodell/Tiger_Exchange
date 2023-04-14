@@ -11,17 +11,22 @@
 {% endblock%}
 
 {% block content %}
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+    <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
+    {{ room_name|json_script:"room-name" }} -->
+
+    <div class="">
+
+    </div>
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'chat/js/reconnecting-websocket.js'%}"></script>
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-        const chatSocket = new WebSocket(
+        const chatSocket = new ReconnectingWebSocket(
             'ws://'
             + window.location.host
             + '/ws/chat/'
@@ -49,7 +54,8 @@
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'message': message,
+                'command': 'new_message'
             }));
             messageInputDom.value = '';
         };

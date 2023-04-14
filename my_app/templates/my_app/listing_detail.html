@@ -31,8 +31,9 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary me-3">Add to Watchlist</button>
             </form>
-            <form method = 'POST'>
-                <button type="button" class="btn btn-secondary me-3">Message Seller</button>
+            <form method="POST" action="{% url 'my_app:create_chat' listing.author.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary me-3">Message Seller</button>
             </form>
             {%endif%}
         </div>
