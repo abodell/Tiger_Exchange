@@ -15,5 +15,6 @@ urlpatterns = [
     path('dev/seed-data/', views.seedData, name='seed_data'),
     path('dev/create-accounts/', views.createAccounts, name='create_test_accounts'),
     path('dev/delete-all-listings', views.deleteAllListings, name='delete_all_listings'),
-    path('dev/delete-listing/<int:id>', views.deleteListing, name='delete_listing')
+    path('dev/delete-listing/<int:id>', views.deleteListing, name='delete_listing'),
+    path('dev/delete-all-accounts', views.deleteAccounts, name='delete_accounts')
 ]

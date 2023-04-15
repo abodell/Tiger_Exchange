@@ -182,7 +182,7 @@ def seedData(request):
         "motorcycle": 16,
         "lighting": 35
     }
-    for _ in range(50):
+    for _ in range(5):
         response = requests.get("https://dummyjson.com/products?limit=0")
         data = response.json()
 
@@ -242,6 +242,11 @@ def deleteAllListings(request):
 def deleteListing(request, id):
     Listing.objects.filter(id=id).delete()
     return HttpResponse(f'deleted listing id {id}')
+
+def deleteAccounts(request):
+    User.objects.all().delete()
+    # User.objects.all().delete()
+    return HttpResponse("deleted all accounts")
 
 
 
