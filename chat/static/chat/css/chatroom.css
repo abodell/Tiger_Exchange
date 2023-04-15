@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .chat-main-content {
     /* border: 1px solid red; */
     display: grid;
