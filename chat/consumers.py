@@ -9,6 +9,9 @@ User = get_user_model()
 
 def get_last_30_messages(chatId):
     chat = get_object_or_404(Chat, id=chatId)
+    all_messages = chat.messages.order_by('timestamp').all()
+    num_messages = len(all_messages)
+    return all_messages[max(0, num_messages-30):]
     return chat.messages.order_by('timestamp').all()[:30]
 
 
