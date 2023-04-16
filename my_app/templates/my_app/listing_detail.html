@@ -35,6 +35,18 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-secondary me-3">Message Seller</button>
             </form>
+            {% if in_cart %}
+            <form method = "POST" action = "{% url 'my_app:listing_detail' listing.pk 'delete_cart' %}">
+                {% csrf_token %}
+                <button type = "submit" class= "btn btn-danger me-3">Delete From Cart</button>
+            </form>
+            {% endif %}
+            {% if in_watchlist %}
+            <form method = "POST" action = "{% url 'my_app:listing_detail' listing.pk 'delete_watchlist' %}">
+                {% csrf_token %}
+                <button type = "submit" class= "btn btn-danger me-3">Delete From Watchlist</button>
+            </form>
+            {% endif %}
             {%endif%}
         </div>
             {% if message %}

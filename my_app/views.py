@@ -130,6 +130,31 @@ def listingDetailView(request, id, type = 'None'):
     listing = Listing.objects.get(id=id)
     message = ""
 
+
+    in_cart = False
+    in_watchlist = False
+
+    current_user = request.user
+    profile = User.objects.all().filter(username = current_user)
+    userID = profile[0].pk
+
+    checkingCart = Cart.objects.all().filter(user_id = userID)
+    try:
+        checkListing = Listing.objects.get(cart = checkingCart[0], id = listing.pk)
+        if checkListing.pk == listing.pk:
+            in_cart = True
+    except:
+        print('not in cart')
+    
+    checkingWatchlist = WatchList.objects.all().filter(user_id = userID)
+    try:
+        checkInWatchList = Listing.objects.get(watchlist = checkingWatchlist[0], id = listing.pk)
+        if checkInWatchList.pk == listing.pk:
+            in_watchlist = True
+    except:
+        print('not in watchlist')
+
+
     if request.POST:
         if not request.user.is_authenticated:
             return redirect(f'/accounts/login/?next=/listings/{id}/detail')
@@ -140,7 +165,6 @@ def listingDetailView(request, id, type = 'None'):
 
         if type == 'cart':
             cart = Cart.objects.all().filter(user_id = userID)
-
             listing.cart.add(cart[0])
             message = "Item Added to Cart!"
         elif type == 'watchlist':
@@ -149,9 +173,17 @@ def listingDetailView(request, id, type = 'None'):
             listing.watchlist.add(watchlist[0])
             message = 'Item Added to Your WatchList!'
 
-          
+        elif type == 'delete_cart':
+            getCart = Cart.objects.all().filter(user_id = userID)
+            listing.cart.remove(getCart[0])
+            message = "Item Removed From Cart!"
+        elif type == 'delete_watchlist':
+            getWatchList = WatchList.objects.all().filter(user_id = userID)
+            listing.watchlist.remove(getWatchList[0])
+            message = "Item Removed From Watchlist!"
+
     is_owner = listing.author == request.user
-    context = {'listing': listing, 'is_owner': is_owner, 'message': message,}
+    context = {'listing': listing, 'is_owner': is_owner, 'message': message, 'in_cart': in_cart, 'in_watchlist': in_watchlist}
     return render(request, 'my_app/listing_detail.html', context=context)
 
 
