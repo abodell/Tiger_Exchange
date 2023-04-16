@@ -123,10 +123,13 @@ def myListingsView(request):
     }
     return render(request, 'my_app/my_listings.html', context=context)
 
+from django.contrib.auth.views import LoginView
+
 def listingDetailView(request, id, type = 'None'):
     # will check request method then handle accordingly
     listing = Listing.objects.get(id=id)
     message = ""
+
 
     in_cart = False
     in_watchlist = False
@@ -153,6 +156,13 @@ def listingDetailView(request, id, type = 'None'):
 
 
     if request.POST:
+        if not request.user.is_authenticated:
+            return redirect(f'/accounts/login/?next=/listings/{id}/detail')
+        
+        current_user = request.user
+        profile = User.objects.all().filter(username = current_user)
+        userID = profile[0].pk
+
         if type == 'cart':
             cart = Cart.objects.all().filter(user_id = userID)
             listing.cart.add(cart[0])
@@ -162,6 +172,7 @@ def listingDetailView(request, id, type = 'None'):
            
             listing.watchlist.add(watchlist[0])
             message = 'Item Added to Your WatchList!'
+
         elif type == 'delete_cart':
             getCart = Cart.objects.all().filter(user_id = userID)
             listing.cart.remove(getCart[0])
@@ -203,7 +214,7 @@ def seedData(request):
         "motorcycle": 16,
         "lighting": 35
     }
-    for _ in range(50):
+    for _ in range(5):
         response = requests.get("https://dummyjson.com/products?limit=0")
         data = response.json()
 
@@ -263,3 +274,32 @@ def deleteAllListings(request):
 def deleteListing(request, id):
     Listing.objects.filter(id=id).delete()
     return HttpResponse(f'deleted listing id {id}')
+
+def deleteAccounts(request):
+    User.objects.all().delete()
+    # User.objects.all().delete()
+    return HttpResponse("deleted all accounts")
+
+
+
+from chat.models import Contact, Chat
+
+@login_required
+def create_chat(request, seller_pk):
+    # Get or create the current user's Contact object
+    buyer_contact, created = Contact.objects.get_or_create(user=request.user)
+
+    # Get or create the seller's Contact object
+    seller_contact, created = Contact.objects.get_or_create(user_id=seller_pk)
+
+    # Check if a chat room with these two participants already exists
+    chat_room = Chat.objects.filter(participants=buyer_contact).filter(participants=seller_contact).first()
+
+    if not chat_room:
+        # Create a new chat room with the buyer and seller as participants
+        chat_room = Chat.objects.create()
+        chat_room.participants.add(buyer_contact, seller_contact)
+        chat_room.save()
+
+    # Redirect the user to the new chat room
+    return redirect('chat:room', room_name=chat_room.pk)

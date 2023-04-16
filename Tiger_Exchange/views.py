@@ -30,13 +30,15 @@ def SignupView(request):
 
 @login_required
 def cart(request):
-    current_user = request.user
-    profile = User.objects.all().filter(username = current_user)
-    if not profile:
-        return render(request, 'registration/signup.html')
-    userID = profile[0].pk
-    cart = Cart.objects.filter(user_id = userID)
-    cartListings = Listing.objects.all().filter(cart = cart[0])
+    cart, created = Cart.objects.get_or_create(user_id=request.user)
+    cartListings = Listing.objects.filter(cart=cart)
+    # current_user = request.user
+    # profile = User.objects.all().filter(username = current_user)
+    # if not profile:
+    #     return render(request, 'registration/signup.html')
+    # userID = profile[0].pk
+    # cart = Cart.objects.filter(user_id = userID)
+    # cartListings = Listing.objects.all().filter(cart = cart[0])
 
     # If a search query is submitted, filter the queryset by name
     search_query = request.GET.get('q')
@@ -86,13 +88,16 @@ def cart(request):
 
 @login_required
 def watchlist(request):
-    current_user = request.user
-    profile = User.objects.all().filter(username = current_user)
-    if not profile:
-        return render(request, 'registration/signup.html')
-    userID = profile[0].pk
-    watchlist = WatchList.objects.filter(user_id = userID)
-    watchlistListings = Listing.objects.all().filter(watchlist = watchlist[0])
+    watchlist, created = WatchList.objects.get_or_create(user_id=request.user)
+    watchlistListings = watchlist.listing_set.all()
+
+    # current_user = request.user
+    # profile = User.objects.all().filter(username = current_user)
+    # if not profile:
+    #     return render(request, 'registration/signup.html')
+    # userID = profile[0].pk
+    # watchlist = WatchList.objects.filter(user_id = userID)
+    # watchlistListings = Listing.objects.all().filter(watchlist = watchlist[0])
 
     # If a search query is submitted, filter the queryset by name
     search_query = request.GET.get('q')

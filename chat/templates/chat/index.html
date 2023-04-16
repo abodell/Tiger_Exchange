@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chat{% endblock %}
+{% block head%}
+{% endblock %}
+
+{% block search%}
+{% url 'my_app:home' %}
+{% endblock%}
+
+{% block content %}
+    <h1 style="text-align: center; color: #522D80; margin-top: .5rem; margin-bottom: 3rem">No Messages</h1>
+{% endblock %}
+

@@ -32,7 +32,7 @@ class Category(models.Model):
     
 class Cart(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField(blank=False)
+    quantity = models.IntegerField(blank=True, default=1)
     # believe total price would be a derived attribute so we wouldn't store it
 
 class WatchList(models.Model):
