@@ -95,7 +95,7 @@ def myListingsView(request):
     if filter_value and filter_value != 'all':
         queryset = queryset.filter(category=filter_value)
 
-    queryset = queryset.order_by('?')
+    queryset = queryset.order_by('title')
 
     paginator = Paginator(queryset, 50)
     page_number = request.GET.get('page', 1)
