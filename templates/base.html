@@ -19,13 +19,6 @@
 </head>
 
 <body>
-    {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success" role="alert">
-            {{ message }}
-          </div>
-        {% endfor %}
-    {% endif %}
     <header class="header__">
         <div class = "header__logo">
             <a href="{% url 'my_app:home'%}"><img src="{% static 'tiger_exchange.svg' %}"></a>
@@ -108,11 +101,16 @@
 
         </div>
     </header>
-
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% endif %}
     {% block content %}
  
     {% endblock %}
-
     <!-- <footer>
        <a>Contact Us</a>
     </footer> -->
