@@ -50,7 +50,7 @@ def cart(request):
     if filter_value and filter_value != 'all':
         cartListings = cartListings.filter(category=filter_value)
 
-    cartListings = cartListings.order_by('?')
+    cartListings = cartListings.order_by('title')
 
     paginator = Paginator(cartListings, 50)
     page_number = request.GET.get('page', 1)
@@ -109,7 +109,7 @@ def watchlist(request):
     if filter_value and filter_value != 'all':
         watchlistListings = watchlistListings.filter(category=filter_value)
 
-    watchlistListings = watchlistListings.order_by('?')
+    watchlistListings = watchlistListings.order_by('title')
 
     paginator = Paginator(watchlistListings, 50)
     page_number = request.GET.get('page', 1)
