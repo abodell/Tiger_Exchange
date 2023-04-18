@@ -131,7 +131,6 @@ def listingDetailView(request, id, type = 'None'):
     message = ""
     if type == 'delete_listing':
         listing.delete()
-        print('helloooooo')
         messages.success(request, "Your listing has been delete!")
         return redirect('/my_listings')
 
