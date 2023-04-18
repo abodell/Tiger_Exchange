@@ -177,10 +177,14 @@ def listingDetailView(request, id, type = 'None'):
             getCart = Cart.objects.all().filter(user_id = userID)
             listing.cart.remove(getCart[0])
             message = "Item Removed From Cart!"
+            messages.success(request ,"Item Removed From Cart!")
+            return redirect('/cart')
         elif type == 'delete_watchlist':
             getWatchList = WatchList.objects.all().filter(user_id = userID)
             listing.watchlist.remove(getWatchList[0])
             message = "Item Removed From Watchlist!"
+            messages.success(request, "Item Removed From Watchlist!")
+            return redirect('/watchlist')
 
     is_owner = listing.author == request.user
     context = {'listing': listing, 'is_owner': is_owner, 'message': message, 'in_cart': in_cart, 'in_watchlist': in_watchlist}
