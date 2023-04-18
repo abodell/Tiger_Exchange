@@ -22,6 +22,12 @@
         <h3>Price: ${{ listing.price }}</h3>
         <hr>
         <div class = "d-flex">
+            {% if is_owner %} 
+            <form method = 'POST' action = "{% url 'my_app:listing_detail' listing.pk 'delete_listing' %}">
+                {% csrf_token %}
+                <button type = 'submit' class = "btn btn-danger me-3">Delete Listing</button>
+            </form>
+            {% endif %}
             {% if not is_owner %}
             <form method = 'POST' action = "{% url 'my_app:listing_detail' listing.pk 'cart' %}">
                 {% csrf_token %}

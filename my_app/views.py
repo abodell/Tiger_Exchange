@@ -129,7 +129,11 @@ def listingDetailView(request, id, type = 'None'):
     # will check request method then handle accordingly
     listing = Listing.objects.get(id=id)
     message = ""
-
+    if type == 'delete_listing':
+        listing.delete()
+        print('helloooooo')
+        messages.success(request, "Your listing has been delete!")
+        return redirect('/my_listings')
 
     in_cart = False
     in_watchlist = False
