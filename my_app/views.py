@@ -137,34 +137,30 @@ def listingDetailView(request, id, type = 'None'):
     in_cart = False
     in_watchlist = False
 
-    current_user = request.user
-    profile = User.objects.all().filter(username = current_user)
-    userID = profile[0].pk
-
-    checkingCart = Cart.objects.all().filter(user_id = userID)
-    try:
-        checkListing = Listing.objects.get(cart = checkingCart[0], id = listing.pk)
-        if checkListing.pk == listing.pk:
-            in_cart = True
-    except:
-        print('not in cart')
-    
-    checkingWatchlist = WatchList.objects.all().filter(user_id = userID)
-    try:
-        checkInWatchList = Listing.objects.get(watchlist = checkingWatchlist[0], id = listing.pk)
-        if checkInWatchList.pk == listing.pk:
-            in_watchlist = True
-    except:
-        print('not in watchlist')
-
-
     if request.POST:
         if not request.user.is_authenticated:
             return redirect(f'/accounts/login/?next=/listings/{id}/detail')
-        
+
         current_user = request.user
         profile = User.objects.all().filter(username = current_user)
         userID = profile[0].pk
+
+        checkingCart = Cart.objects.all().filter(user_id = request.user)
+        try:
+            checkListing = Listing.objects.get(cart = checkingCart[0], id = listing.pk)
+            if checkListing.pk == listing.pk:
+                in_cart = True
+        except:
+            print('not in cart')
+        
+        checkingWatchlist = WatchList.objects.all().filter(user_id = request.user)
+        try:
+            checkInWatchList = Listing.objects.get(watchlist = checkingWatchlist[0], id = listing.pk)
+            if checkInWatchList.pk == listing.pk:
+                in_watchlist = True
+        except:
+            print('not in watchlist')
+
 
         if type == 'cart':
             cart = Cart.objects.all().filter(user_id = userID)
