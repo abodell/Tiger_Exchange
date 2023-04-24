@@ -138,23 +138,18 @@ def listingDetailView(request, id, type = 'None'):
     in_watchlist = False
 
     if request.user.is_authenticated:
-        current_user = request.user
-        profile = User.objects.all().filter(username = current_user)
-        userID = profile[0].pk
-
-        checkingCart = Cart.objects.all().filter(user_id = userID)
-        # checkingCart, created = Cart.objects.get_or_create(user_id=request.user)
+        
+        checkingCart, created = Cart.objects.get_or_create(user_id=request.user)
         try:
-            checkListing = Listing.objects.get(cart = checkingCart[0], id = listing.pk)
+            checkListing = Listing.objects.get(cart = checkingCart, id = listing.pk)
             if checkListing.pk == listing.pk:
                 in_cart = True
         except:
             print('not in cart')
         
-        checkingWatchlist = WatchList.objects.all().filter(user_id = userID)
-        # checkingWatchlist, created = WatchList.objects.get_or_create(user_id=request.user)
+        checkingWatchlist, created = WatchList.objects.get_or_create(user_id=request.user)
         try:
-            checkInWatchList = Listing.objects.get(watchlist = checkingWatchlist[0], id = listing.pk)
+            checkInWatchList = Listing.objects.get(watchlist = checkingWatchlist, id = listing.pk)
             if checkInWatchList.pk == listing.pk:
                 in_watchlist = True
         except:
