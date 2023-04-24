@@ -29,14 +29,18 @@
             </form>
             {% endif %}
             {% if not is_owner %}
+            {% if not in_cart %}
             <form method = 'POST' action = "{% url 'my_app:listing_detail' listing.pk 'cart' %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success me-3">Add to Cart</button>
             </form>
+            {% endif %}
+            {% if not in_watchlist %}
             <form method = 'POST' action = "{% url 'my_app:listing_detail' listing.pk 'watchlist' %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary me-3">Add to Watchlist</button>
             </form>
+            {% endif %}
             <form method="POST" action="{% url 'my_app:create_chat' listing.author.pk %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-secondary me-3">Message Seller</button>
