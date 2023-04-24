@@ -142,7 +142,7 @@ def watchlist(request):
         }
     return render(request, 'my_app/watchlist.html', context=context)
 
-
+@login_required
 def useraccount(request):
     current_user = request.user
     profile = User.objects.all().filter(username = current_user)
